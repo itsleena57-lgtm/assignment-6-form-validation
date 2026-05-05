@@ -102,22 +102,18 @@ button:disabled{
 
 <form id="form">
 
-<!-- NAME -->
 <label>Name</label>
 <input type="text" id="name" placeholder="Enter your name">
 <div class="error" id="nameError"></div>
 
-<!-- EMAIL -->
 <label>Email</label>
 <input type="text" id="email" placeholder="Enter your email">
 <div class="error" id="emailError"></div>
 
-<!-- PASSWORD -->
 <label>Password</label>
 <input type="password" id="password" placeholder="Enter password">
 <div class="error" id="passError"></div>
 
-<!-- CITY -->
 <label>City</label>
 <select id="city">
 <option value="">Select City</option>
@@ -130,7 +126,6 @@ button:disabled{
 </select>
 <div class="error" id="cityError"></div>
 
-<!-- GENDER -->
 <label>Gender</label>
 <div class="gender-box">
 <input type="radio" name="gender" value="Male">Male
@@ -139,7 +134,6 @@ button:disabled{
 </div>
 <div class="error" id="genderError"></div>
 
-<!-- HOBBIES -->
 <label>Hobbies</label>
 <div class="hobby-box">
 <input type="checkbox" value="Reading">Reading
@@ -149,7 +143,6 @@ button:disabled{
 </div>
 <div class="error" id="hobbyError"></div>
 
-<!-- BUTTON -->
 <button type="submit" id="btn" disabled>Submit</button>
 
 </form>
@@ -175,73 +168,59 @@ const hobbyError = document.getElementById("hobbyError");
 
 let emailTouched = false;
 
-/* NAME VALIDATION */
+/* NAME */
 function validateName(){
-
 if(name.value.trim() === ""){
 nameError.textContent = "Name is required";
 return false;
 }
-
-else if(name.value.length < 3){
+if(name.value.length < 3){
 nameError.textContent = "Name must be at least 3 characters";
 return false;
 }
-
-else{
 nameError.textContent = "";
 return true;
 }
-}
 
-/* EMAIL VALIDATION */
+/* EMAIL */
 function validateEmail(){
-
 if(email.value.trim() === ""){
 if(emailTouched){
 emailError.textContent = "Email is required";
 }
 return false;
 }
-
-else if(!(email.value.includes("@") && email.value.endsWith(".com"))){
+if(!(email.value.includes("@") && email.value.endsWith(".com"))){
 emailError.textContent = "Email must contain @ and end with .com";
 return false;
 }
-
-else{
 emailError.textContent = "";
 return true;
 }
-}
 
-/* PASSWORD VALIDATION (UPDATED RULE) */
+/* PASSWORD (FIXED) */
 function validatePassword(){
 
-if(password.value.trim() === ""){
+let value = password.value.trim();
+
+/* clear error */
+passError.textContent = "";
+
+/* required */
+if(value === ""){
 passError.textContent = "Password is required";
 return false;
 }
 
-else if(password.value.length !== 8){
-passError.textContent = "Password must be exactly 8 characters";
+/* minimum 8 characters */
+if(value.length < 8){
+passError.textContent = "Password must be 8 characters";
 return false;
 }
 
-/* 3 letters + 4 numbers + 1 special character */
-let passRegex =
-/^(?=(?:.*[A-Za-z]){3})(?=(?:.*\d){4})(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8}$/;
-
-if(!passRegex.test(password.value)){
-passError.textContent =
-"Password must have 3 letters, 4 numbers & 1 special character";
-return false;
-}
-
-else{
+/* valid if 8 or more */
 passError.textContent = "";
 return true;
-}
 }
 
 /* CITY */
@@ -250,10 +229,8 @@ if(city.value === ""){
 cityError.textContent = "Please select city";
 return false;
 }
-else{
 cityError.textContent = "";
 return true;
-}
 }
 
 /* GENDER */
@@ -264,10 +241,8 @@ if(!gender){
 genderError.textContent = "Please select gender";
 return false;
 }
-else{
 genderError.textContent = "";
 return true;
-}
 }
 
 /* HOBBY */
@@ -278,15 +253,12 @@ if(hobbies.length === 0){
 hobbyError.textContent = "Select at least one hobby";
 return false;
 }
-else{
 hobbyError.textContent = "";
 return true;
 }
-}
 
-/* CHECK FORM */
+/* CHECK */
 function checkForm(){
-
 if(
 validateName() &&
 validateEmail() &&
