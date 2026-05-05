@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration Form</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#1e3c72,#2a5298);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+.container{
+  width:420px;
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  color:#1e3c72;
+}
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+input,
+select{
+  width:100%;
+  padding:12px;
+  border:2px solid #ccc;
+  border-radius:8px;
+  outline:none;
+  transition:0.3s;
+}
+input:focus,
+select:focus{
+  border-color:#2a5298;
+  box-shadow:0 0 5px rgba(42,82,152,0.4);
+}
+.gender-box,
+.hobby-box{
+  margin-top:10px;
+}
+.gender-box input,
+.hobby-box input{
+  width:auto;
+  margin-right:5px;
+}
+.gender-box label,
+.hobby-box label{
+  display:inline;
+  font-weight:normal;
+  margin-right:15px;
+}
+.error{
+  color:red;
+  font-size:13px;
+  margin-top:4px;
+}
+button{
+  width:100%;
+  padding:13px;
+  margin-top:25px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(135deg,#2a5298,#1e3c72);
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+  transition:0.3s;
+  font-weight:bold;
+}
+button:hover{
+  transform:scale(1.03);
+}
+button:disabled{
+  background:gray;
+  cursor:not-allowed;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Student Registration Form</h1>
+<form id="form">
+<!-- NAME -->
+<label>Name</label><input type="text"
+id="name"
+placeholder="Enter your name">
+<div class="error" id="nameError"></div>
+<!-- EMAIL -->
+<label>Email</label>
+<input type="text"
+id="email"
+placeholder="Enter your email">
+<div class="error" id="emailError"></div>
+
+<!-- PASSWORD -->
+
+<label>Password</label>
+
+<input type="password"
+id="password"
+placeholder="Enter password">
+
+<div class="error" id="passError"></div>
+
+
+<!-- CITY -->
+
+<label>City</label>
+
+<select id="city">
+
+<option value="">Select City</option>
+
+<option>Islamabad</option>
+<option>Rawalpindi</option>
+<option>Lahore</option>
+<option>Karachi</option>
+<option>Peshawar</option>
+<option>Quetta</option>
+
+</select>
+
+<div class="error" id="cityError"></div>
+
+
+<!-- GENDER -->
+
+<label>Gender</label>
+
+<div class="gender-box">
+
+<input type="radio"
+name="gender"
+value="Male">
+Male
+
+<input type="radio"
+name="gender"
+value="Female">
+Female
+
+<input type="radio"
+name="gender"
+value="Prefer not to say">
+Prefer not to say
+
+</div>
+
+<div class="error" id="genderError"></div>
+
+
+<!-- HOBBIES -->
+
+<label>Hobbies</label>
+
+<div class="hobby-box">
+
+<input type="checkbox" value="Reading">
+Reading
+
+<input type="checkbox" value="Cooking">
+Cooking
+
+<input type="checkbox" value="Music">
+Music
+
+<input type="checkbox" value="Cricket">
+Cricket
+
+</div>
+
+<div class="error" id="hobbyError"></div>
+
+
+<!-- BUTTON -->
+
+<button type="submit" id="btn" disabled>
+Submit
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+const form = document.getElementById("form");
+
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const city = document.getElementById("city");
+
+const btn = document.getElementById("btn");
+
+const nameError = document.getElementById("nameError");
+const emailError = document.getElementById("emailError");
+const passError = document.getElementById("passError");
+const cityError = document.getElementById("cityError");
+const genderError = document.getElementById("genderError");
+const hobbyError = document.getElementById("hobbyError");
+
+
+/* NAME VALIDATION */
+
+function validateName(){
+
+if(name.value.trim() === ""){
+
+nameError.textContent = "Name is required";
+return false;
+
+}
+
+else if(name.value.length !== 3){
+
+nameError.textContent =
+"Name must be exactly 3 characters";
+
+return false;
+
+}
+
+else{
+
+nameError.textContent = "";
+return true;
+
+}
+
+}
+
+
+/* EMAIL VALIDATION */
+
+function validateEmail(){
+
+if(email.value.trim() === ""){
+
+emailError.textContent = "Email is required";
+return false;
+
+}
+
+else if(
+!(
+email.value.includes("@")
+&&
+email.value.endsWith(".com")
+)
+){
+
+emailError.textContent =
+"Email must contain @ and end with .com";
+
+return false;
+
+}
+
+else{
+
+emailError.textContent = "";
+return true;
+
+}
+
+}
+
+
+/* PASSWORD VALIDATION */
+
+function validatePassword(){
+
+if(password.value.trim() === ""){
+
+passError.textContent =
+"Password is required";
+
+return false;
+
+
+}
+
+/* MORE THAN 8 CHARACTERS */
+
+else if(password.value.length > 8){
+
+passError.textContent =
+"Password must be exactly 8 characters";
+
+return false;
+
+}
+
+let passRegex =
+/^(?=(?:.*[A-Za-z]){3})(?=(?:.*\d){4})(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8}$/;
+
+if(!passRegex.test(password.value)){
+
+passError.textContent =
+"Password: 3 letters + 4 digits + 1 special";
+
+return false;
+
+}
+
+else{
+
+passError.textContent = "";
+return true;
+
+}
+
+}
+/* CITY VALIDATION */
+function validateCity(){
+if(city.value === ""){
+cityError.textContent =
+"Please select city";
+return false;
+}
+else{
+cityError.textContent = "";
+return true;
+}
+
+}
+
+
+/* GENDER VALIDATION */
+
+function validateGender(){
+
+let gender =
+document.querySelector('input[name="gender"]:checked');
+
+if(!gender){
+
+genderError.textContent =
+"Please select gender";
+
+return false;
+
+}
+
+else{
+
+genderError.textContent = "";
+return true;
+
+}
+
+}
+
+
+/* HOBBY VALIDATION */
+
+function validateHobby(){
+
+let hobbies =
+document.querySelectorAll('input[type="checkbox"]:checked');
+
+if(hobbies.length === 0){
+
+hobbyError.textContent =
+"Select at least one hobby";
+
+return false;
+
+}
+
+else{
+
+hobbyError.textContent = "";
+return true;
+
+}
+
+}
+
+
+/* BUTTON ENABLE */
+
+function checkForm(){
+
+if(
+validateName() &&
+validateEmail() &&
+validatePassword() &&
+validateCity() &&
+validateGender() &&
+validateHobby()
+){
+
+btn.disabled = false;
+
+}
+
+else{
+
+btn.disabled = true;
+
+}
+
+}
+
+
+/* EVENTS */
+
+name.addEventListener("input", () => {
+
+validateName();
+checkForm();
+
+});
+
+email.addEventListener("input", () => {
+
+validateEmail();
+checkForm();
+
+});
+
+password.addEventListener("input", () => {
+
+validatePassword();
+checkForm();
+
+});
+
+city.addEventListener("change", () => {
+
+validateCity();
+checkForm();
+
+});
+
+document.querySelectorAll('input[name="gender"]')
+.forEach(radio => {
+
+radio.addEventListener("change", () => {
+
+validateGender();
+checkForm();
+
+});
+
+});
+
+document.querySelectorAll('input[type="checkbox"]')
+.forEach(box => {
+
+box.addEventListener("change", () => {
+
+validateHobby();
+checkForm();
+
+});
+
+});
+
+
+/* FORM SUBMIT */
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+if(
+validateName() &&
+validateEmail() &&
+validatePassword() &&
+validateCity() &&
+validateGender() &&
+validateHobby()
+){
+alert("Form Submitted Successfully 🎉");
+form.reset();
+btn.disabled = true;
+}
+});
+</script>
+</body>
+</html>
