@@ -1,334 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Registration Form</title>
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-body{
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#1e3c72,#2a5298);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  padding:20px;
-}
-.container{
-  width:420px;
-  background:white;
-  padding:30px;
-  border-radius:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-}
-h1{
-  text-align:center;
-  margin-bottom:25px;
-  color:#1e3c72;
-}
-label{
-  display:block;
-  margin-top:15px;
-  margin-bottom:6px;
-  font-weight:bold;
-}
-input,
-select{
-  width:100%;
-  padding:12px;
-  border:2px solid #ccc;
-  border-radius:8px;
-  outline:none;
-  transition:0.3s;
-}
-input:focus,
-select:focus{
-  border-color:#2a5298;
-  box-shadow:0 0 5px rgba(42,82,152,0.4);
-}
-.gender-box,
-.hobby-box{
-  margin-top:10px;
-}
-.gender-box input,
-.hobby-box input{
-  width:auto;
-  margin-right:5px;
-}
-.gender-box label,
-.hobby-box label{
-  display:inline;
-  font-weight:normal;
-  margin-right:15px;
-}
-.error{
-  color:red;
-  font-size:13px;
-  margin-top:4px;
-}
-button{
-  width:100%;
-  padding:13px;
-  margin-top:25px;
-  border:none;
-  border-radius:8px;
-  background:linear-gradient(135deg,#2a5298,#1e3c72);
-  color:white;
-  font-size:17px;
-  cursor:pointer;
-  transition:0.3s;
-  font-weight:bold;
-}
-button:hover{
-  transform:scale(1.03);
-}
-button:disabled{
-  background:gray;
-  cursor:not-allowed;
-}
-</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 420px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1e3c72;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2a5298;
+            box-shadow: 0 0 5px rgba(42, 82, 152, 0.4);
+        }
+
+        .gender-box,
+        .hobby-box {
+            margin-top: 10px;
+        }
+
+        .gender-box input,
+        .hobby-box input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .gender-box label,
+        .hobby-box label {
+            display: inline;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+        }
+
+        button:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+
+        /* Success Message Styling */
+        #successMessage {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <h1>Student Registration Form</h1>
+        <form id="form"> 
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+            <div class="error" id="nameError"></div> 
 
-<div class="container">
-<h1>Student Registration Form</h1>
+            <label>Email</label>
+            <input type="text" id="email" placeholder="Enter your email">
+            <div class="error" id="emailError"></div> 
 
-<form id="form">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password">
+            <div class="error" id="passError"></div> 
 
-<label>Name</label>
-<input type="text" id="name" placeholder="Enter your name">
-<div class="error" id="nameError"></div>
+            <label>City</label>
+            <select id="city">
+                <option value="">Select City</option>
+                <option>Islamabad</option>
+                <option>Rawalpindi</option>
+                <option>Lahore</option>
+                <option>Karachi</option>
+                <option>Peshawar</option>
+                <option>Quetta</option>
+            </select>
+            <div class="error" id="cityError"></div> 
 
-<label>Email</label>
-<input type="text" id="email" placeholder="Enter your email">
-<div class="error" id="emailError"></div>
+            <label>Gender</label>
+            <div class="gender-box">
+                <input type="radio" name="gender" value="Male">Male
+                <input type="radio" name="gender" value="Female">Female
+                <input type="radio" name="gender" value="Prefer not to say">Prefer not to say
+            </div>
+            <div class="error" id="genderError"></div> 
 
-<label>Password</label>
-<input type="password" id="password" placeholder="Enter password">
-<div class="error" id="passError"></div>
+            <label>Hobbies</label>
+            <div class="hobby-box">
+                <input type="checkbox" value="Reading">Reading
+                <input type="checkbox" value="Cooking">Cooking
+                <input type="checkbox" value="Music">Music
+                <input type="checkbox" value="Cricket">Cricket
+            </div>
+            <div class="error" id="hobbyError"></div> 
 
-<label>City</label>
-<select id="city">
-<option value="">Select City</option>
-<option>Islamabad</option>
-<option>Rawalpindi</option>
-<option>Lahore</option>
-<option>Karachi</option>
-<option>Peshawar</option>
-<option>Quetta</option>
-</select>
-<div class="error" id="cityError"></div>
+            <div id="successMessage">
+                ✅ Form Submitted Successfully!
+            </div>
 
-<label>Gender</label>
-<div class="gender-box">
-<input type="radio" name="gender" value="Male">Male
-<input type="radio" name="gender" value="Female">Female
-<input type="radio" name="gender" value="Prefer not to say">Prefer not to say
-</div>
-<div class="error" id="genderError"></div>
+            <button type="submit" id="btn" disabled>Submit</button>
+        </form>
+    </div>
+    <script>
 
-<label>Hobbies</label>
-<div class="hobby-box">
-<input type="checkbox" value="Reading">Reading
-<input type="checkbox" value="Cooking">Cooking
-<input type="checkbox" value="Music">Music
-<input type="checkbox" value="Cricket">Cricket
-</div>
-<div class="error" id="hobbyError"></div>
+        const form = document.getElementById("form");
 
-<button type="submit" id="btn" disabled>Submit</button>
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const city = document.getElementById("city");
 
-</form>
-</div>
+        const btn = document.getElementById("btn");
 
-<script>
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const passError = document.getElementById("passError");
+        const cityError = document.getElementById("cityError");
+        const genderError = document.getElementById("genderError");
+        const hobbyError = document.getElementById("hobbyError");
 
-const form = document.getElementById("form");
+        /* FLAGS */
+        let emailTouched = false;
+        let passwordTouched = false;
 
-const name = document.getElementById("name");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const city = document.getElementById("city");
+        /* NAME */
+        function validateName() {
+            if (name.value.trim() === "") {
+                nameError.textContent = "Name is required";
+                return false;
+            }
+            else if (name.value.length < 3) {
+                nameError.textContent = "Name must be at least 3 characters";
+                return false;
+            }
+            else {
+                nameError.textContent = "";
+                return true;
+            }
+        }
 
-const btn = document.getElementById("btn");
+        /* EMAIL */
+        function validateEmail() {
+            if (email.value.trim() === "") {
+                if (emailTouched) {
+                    emailError.textContent = "Email is required";
+                }
+                return false;
+            }
+            else if (!(email.value.includes("@") && email.value.endsWith(".com"))) {
+                emailError.textContent = "Email must contain @ and end with .com";
+                return false;
+            }
+            else {
+                emailError.textContent = "";
+                return true;
+            }
+        }
 
-const nameError = document.getElementById("nameError");
-const emailError = document.getElementById("emailError");
-const passError = document.getElementById("passError");
-const cityError = document.getElementById("cityError");
-const genderError = document.getElementById("genderError");
-const hobbyError = document.getElementById("hobbyError");
+        /* PASSWORD */
+        function validatePassword() {
+            let passRegex = /^(?=(?:.*[A-Za-z]){3,})(?=(?:.*\d){4,})(?=.*[!@#$%^&*]).+$/;
 
-let emailTouched = false;
+            if (password.value.trim() === "") {
+                if (passwordTouched) {
+                    passError.textContent = "Password is required";
+                }
+                return false;
+            }
+            else if (password.value.length < 8) {
+                passError.textContent = "Password must be at least 8 characters";
+                return false;
+            } 
+            else if (!passRegex.test(password.value)) {
+                passError.textContent = "Password: 3 letters + 4 digits + 1 special character";
+                return false;
+            }
+            else {
+                passError.textContent = "";
+                return true;
+            }
+        }
 
-/* NAME */
-function validateName(){
-if(name.value.trim() === ""){
-nameError.textContent = "Name is required";
-return false;
-}
-if(name.value.length < 3){
-nameError.textContent = "Name must be at least 3 characters";
-return false;
-}
-nameError.textContent = "";
-return true;
-}
+        /* CITY */
+        function validateCity() {
+            if (city.value === "") {
+                cityError.textContent = "Please select city";
+                return false;
+            }
+            else {
+                cityError.textContent = "";
+                return true;
+            }
+        }
 
-/* EMAIL */
-function validateEmail(){
-if(email.value.trim() === ""){
-if(emailTouched){
-emailError.textContent = "Email is required";
-}
-return false;
-}
-if(!(email.value.includes("@") && email.value.endsWith(".com"))){
-emailError.textContent = "Email must contain @ and end with .com";
-return false;
-}
-emailError.textContent = "";
-return true;
-}
+        /* GENDER */
+        function validateGender() {
+            let gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                genderError.textContent = "Please select gender";
+                return false;
+            }
+            else {
+                genderError.textContent = "";
+                return true;
+            }
+        }
 
-/* PASSWORD (FIXED) */
-function validatePassword(){
+        /* HOBBY */
+        function validateHobby() {
+            let hobbies = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (hobbies.length === 0) {
+                hobbyError.textContent = "Select at least one hobby";
+                return false;
+            }
+            else {
+                hobbyError.textContent = "";
+                return true;
+            }
+        }
 
-let value = password.value.trim();
+        /* CHECK FORM VALIDATION */
+        function checkForm() {
+            if (
+                validateName() &&
+                validateEmail() &&
+                validatePassword() &&
+                validateCity() &&
+                validateGender() &&
+                validateHobby()
+            ) {
+                btn.disabled = false;
+            }
+            else {
+                btn.disabled = true;
+            }
+        }
 
-/* clear error */
-passError.textContent = "";
+        /* EVENTS - Real-time validation */
+        name.addEventListener("input", () => {
+            validateName();
+            checkForm();
+        });
 
-/* required */
-if(value === ""){
-passError.textContent = "Password is required";
-return false;
-}
+        email.addEventListener("input", () => {
+            emailTouched = true;
+            validateEmail();
+            checkForm();
+        });
 
-/* minimum 8 characters */
-if(value.length < 8){
-passError.textContent = "Password must be 8 characters";
-return false;
-}
+        password.addEventListener("input", () => {
+            passwordTouched = true;
+            validatePassword();
+            checkForm();
+        });
 
-/* valid if 8 or more */
-passError.textContent = "";
-return true;
-}
+        city.addEventListener("change", () => {
+            validateCity();
+            checkForm();
+        });
 
-/* CITY */
-function validateCity(){
-if(city.value === ""){
-cityError.textContent = "Please select city";
-return false;
-}
-cityError.textContent = "";
-return true;
-}
+        document.querySelectorAll('input[name="gender"]').forEach(radio => {
+            radio.addEventListener("change", () => {
+                validateGender();
+                checkForm();
+            });
+        });
 
-/* GENDER */
-function validateGender(){
-let gender = document.querySelector('input[name="gender"]:checked');
+        document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+            box.addEventListener("change", () => {
+                validateHobby();
+                checkForm();
+            });
+        });
 
-if(!gender){
-genderError.textContent = "Please select gender";
-return false;
-}
-genderError.textContent = "";
-return true;
-}
+        /* SUBMIT FORM */
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-/* HOBBY */
-function validateHobby(){
-let hobbies = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (
+                validateName() &&
+                validateEmail() &&
+                validatePassword() &&
+                validateCity() &&
+                validateGender() &&
+                validateHobby()
+            ) {
+                // Show success message
+                const successMsg = document.getElementById("successMessage");
+                successMsg.style.display = "block";
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMsg.style.display = "none";
+                }, 3000);
+                
+                // Reset form
+                form.reset();
+                btn.disabled = true;
+                
+                // Reset flags
+                emailTouched = false;
+                passwordTouched = false;
+                
+                // Clear all error messages
+                nameError.textContent = "";
+                emailError.textContent = "";
+                passError.textContent = "";
+                cityError.textContent = "";
+                genderError.textContent = "";
+                hobbyError.textContent = "";
+                
+                // Uncheck all radio buttons
+                document.querySelectorAll('input[name="gender"]').forEach(radio => {
+                    radio.checked = false;
+                });
+                
+                // Uncheck all checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+                    box.checked = false;
+                });
+            }
+        });
 
-if(hobbies.length === 0){
-hobbyError.textContent = "Select at least one hobby";
-return false;
-}
-hobbyError.textContent = "";
-return true;
-}
-
-/* CHECK */
-function checkForm(){
-if(
-validateName() &&
-validateEmail() &&
-validatePassword() &&
-validateCity() &&
-validateGender() &&
-validateHobby()
-){
-btn.disabled = false;
-}
-else{
-btn.disabled = true;
-}
-}
-
-/* EVENTS */
-name.addEventListener("input", () => {
-validateName();
-checkForm();
-});
-
-email.addEventListener("input", () => {
-emailTouched = true;
-validateEmail();
-checkForm();
-});
-
-password.addEventListener("input", () => {
-validatePassword();
-checkForm();
-});
-
-city.addEventListener("change", () => {
-validateCity();
-checkForm();
-});
-
-document.querySelectorAll('input[name="gender"]').forEach(radio => {
-radio.addEventListener("change", () => {
-validateGender();
-checkForm();
-});
-});
-
-document.querySelectorAll('input[type="checkbox"]').forEach(box => {
-box.addEventListener("change", () => {
-validateHobby();
-checkForm();
-});
-});
-
-/* SUBMIT */
-form.addEventListener("submit", function(e){
-e.preventDefault();
-
-if(
-validateName() &&
-validateEmail() &&
-validatePassword() &&
-validateCity() &&
-validateGender() &&
-validateHobby()
-){
-alert("Form Submitted Successfully 🎉");
-form.reset();
-btn.disabled = true;
-}
-});
-
-</script>
-
+    </script>
 </body>
+
 </html>
